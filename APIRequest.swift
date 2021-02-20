@@ -1,6 +1,6 @@
 //
 //  APIRequest.swift
-//  MOKTEST
+//
 //
 //  Created by Till Vennefrohne on 18.02.21.
 //
@@ -32,27 +32,45 @@ extension CharacterSet {
 
 class APIRequest  {
     
-    var APIUrl = "http://example.com/json.php"
+    private var APIUrl = ""
      
+    init(apiurl: String) {
+        self.APIUrl = apiurl
+    }
+    
     struct ResponseStruct {
         var Result = ""
         var Timestamp = 0
-        var Data = [String: String]()
+        var Data = [String: Any]()
         var ServerData = ""
+        var SessionID = ""
+        var Raw = ""
     }
     
-    var Response = ResponseStruct()
-    
-    
-    static let sharedAPIRequest = APIRequest()
+    public var Response = ResponseStruct()
+    private var IsBusy = false
+    public var BlockWhenBusy = false
     
     //Public function to make the call
-    public func call(method: String,parameters: Dictionary<String, Any>, ResponseHandler: @escaping (Any) -> Any) {
-        self.makerequest(method: method, parameters: parameters, ResponseHandler: ResponseHandler)
+    public func call(method: String,parameters: Dictionary<String, Any>, ResponseHandler: @escaping (Bool) -> Any) -> Bool {
+        if (BlockWhenBusy && IsBusy) {
+            print("API: Request cancelled - Busy.")
+            ResponseHandler(false)
+            return false
+        }
+        self.IsBusy = true
+        do {
+            try self.makerequest(method: method, parameters: parameters, ResponseHandler: ResponseHandler)
+
+        } catch {
+            print("API: Unexpected error")
+            return false
+        }
+        return true
     }
     
     //Internal function that makes the API Request
-    private func makerequest(method: String, parameters: Dictionary<String, Any>, ResponseHandler: @escaping (Any) -> Any) {
+    private func makerequest(method: String, parameters: Dictionary<String, Any>, ResponseHandler: @escaping (Bool) -> Any) {
         
         let url = URL(string: APIUrl)!
         var request = URLRequest(url: url)
@@ -76,7 +94,6 @@ class APIRequest  {
 
             if let data = data {
                 do {
-                    print(String(data: data, encoding: .utf8)!)
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     
                     DispatchQueue.main.async {
@@ -85,10 +102,12 @@ class APIRequest  {
                             self.Response.Result = dictionary["RESULT"] as! String
                             self.Response.Timestamp = dictionary["TIMESTAMP"] as! Int
                             self.Response.Data = dictionary["DATA"] as! Dictionary
+                            self.Response.SessionID = dictionary["SESSIONID"] as! String
+                            self.Response.Raw = String(data: data, encoding: .utf8)!
                         }
-                        
                         //Call ResponseHandler
-                        ResponseHandler(json)
+                        ResponseHandler(true)
+                        self.IsBusy = false
                     }
 
                     
