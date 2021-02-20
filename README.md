@@ -24,7 +24,7 @@ Add a Responsehandler to handle the API Response
 ```swift
     func MyResponseHandler(success: Bool) {
         if (success) {
-            //API Request was sucsessfully submitted, do something with the response data
+            //API Request was successfully submitted, do something with the response data
             var myVar = self.API.Response.Data["test"] as! String //Data to variable
             self.responseLabel.text = (self.API.Response.Data["test"] as! String) + String(self.API.Response.Data["time"] as! Int) //Data to UI Label
             
