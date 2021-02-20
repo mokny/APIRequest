@@ -1,9 +1,10 @@
 # APIRequest
-iOS Swift APIRequest Class
+iOS Swift APIRequest Class. This class uses the native URLSession to handle API-Requests asynchronous, non blocking. It sends parameters via POST to the server and receive a JSON Array of data mapped to a Dictionary.
 
-# Example
-Upload the json.php to some webserver and link the API.APIUrl to the file. If using an insecure connection, use this manual: https://stackoverflow.com/questions/32631184/the-resource-could-not-be-loaded-because-the-app-transport-security-policy-requi
+## Installation
+Add the APIRequest.swift file to your project and upload the json.php to some webserver that is reachable via the internet.
 
+## Example
 Initialize the class (maybe globally in your view controller)
 ```swift
   var API = APIRequest("http://example.com/json.php")
@@ -36,3 +37,5 @@ Add a Responsehandler to handle the API Response
         }
     }
 ```
+## Troubleshooting
+If using an insecure connection (http - non https for example), use this manual: https://stackoverflow.com/questions/32631184/the-resource-could-not-be-loaded-because-the-app-transport-security-policy-requi
