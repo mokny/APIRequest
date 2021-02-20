@@ -1,5 +1,5 @@
 # APIRequest
-iOS Swift APIRequest Class. This class uses the native URLSession to handle API-Requests asynchronous, non blocking. It sends parameters via POST to the server and receive a JSON Array of data mapped to a Dictionary.
+iOS Swift / Xcode APIRequest Class. This class uses the native URLSession to handle API-Requests asynchronous, non blocking. It sends parameters via POST to the server and receive a JSON Array of data mapped to a Dictionary.
 
 ## Installation
 Add the APIRequest.swift file to your project and upload the json.php to some webserver that is reachable via the internet.
