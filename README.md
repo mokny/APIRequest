@@ -6,22 +6,33 @@ Upload the json.php to some webserver and link the API.APIUrl to the file. If us
 
 Initialize the class (maybe globally in your view controller)
 ```swift
-  var API = APIRequest()
+  var API = APIRequest("http://example.com/json.php")
 ```
 
 Inside some function, make the call like this
 ```swift
     let params = [
-        "bla": "blabla",
-        "asd": "asdasdasdasd"
+        "name": "John Doe",
+        "mail": "johndoe@example.com"
     ]
-    API.call(method: "ASD", parameters: params, ResponseHandler: MyResponseHandler)
+    API.BlockWhenBusy = true //Default is false. This will make the API cancel all requests if another request is still pending.
+    API.call(method: "TEST", parameters: params, ResponseHandler: MyResponseHandler)
 ```
 
 Add a Responsehandler to handle the API Response
 ```swift
-    func MyResponseHandler(json: Any) {
-        var test = self.API.Response.Data["test"] //Into a variable
-        self.responseLabel.text = self.API.Response.Data["test"] //Directly into the UI - here a label
+    func MyResponseHandler(success: Bool) {
+        if (success) {
+            //API Request was sucsessfully submitted, do something with the response data
+            var myVar = self.API.Response.Data["test"] as! String //Data to variable
+            self.responseLabel.text = (self.API.Response.Data["test"] as! String) + String(self.API.Response.Data["time"] as! Int) + (self.API.Response.Data["uid"] as! String) //Data to UI Label
+            
+            //Receive an Array from the API
+            for arraycontent in self.API.Response.Data["array"] as! Array<String> {
+                self.responseLabel.text! += arraycontent
+            }
+        } else {
+            //API is busy - Request cancelled
+        }
     }
 ```
