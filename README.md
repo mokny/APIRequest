@@ -7,7 +7,7 @@ Add the APIRequest.swift file to your project and upload the json.php to some we
 ## Example
 Initialize the class (maybe globally in your view controller)
 ```swift
-  var API = APIRequest("http://example.com/json.php")
+  var API = APIRequest(apiurl: "http://example.com/json.php")
 ```
 
 Inside some function, make the call like this
