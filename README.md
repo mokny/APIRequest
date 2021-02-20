@@ -26,7 +26,7 @@ Add a Responsehandler to handle the API Response
         if (success) {
             //API Request was sucsessfully submitted, do something with the response data
             var myVar = self.API.Response.Data["test"] as! String //Data to variable
-            self.responseLabel.text = (self.API.Response.Data["test"] as! String) + String(self.API.Response.Data["time"] as! Int) + (self.API.Response.Data["uid"] as! String) //Data to UI Label
+            self.responseLabel.text = (self.API.Response.Data["test"] as! String) + String(self.API.Response.Data["time"] as! Int) //Data to UI Label
             
             //Receive an Array from the API
             for arraycontent in self.API.Response.Data["array"] as! Array<String> {
