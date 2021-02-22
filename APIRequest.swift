@@ -33,7 +33,8 @@ extension CharacterSet {
 class APIRequest  {
     
     private var APIUrl = ""
-     
+    private var UserAgent = "APIRequest"
+    
     init(apiurl: String) {
         self.APIUrl = apiurl
     }
@@ -72,10 +73,14 @@ class APIRequest  {
     //Internal function that makes the API Request
     private func makerequest(method: String, parameters: Dictionary<String, Any>, ResponseHandler: @escaping (Bool) -> Any) {
         
+        let config = URLSessionConfiguration.default
+        config.httpAdditionalHeaders = ["User-Agent": self.UserAgent]
+        
         let url = URL(string: APIUrl)!
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        
         var postparams: [String: Any] = [:]
         
         //Add Parameters to POST Array
@@ -89,7 +94,7 @@ class APIRequest  {
         request.httpBody = postparams.percentEncoded()
 
         //Start URLSession
-        let session = URLSession.shared
+        let session = URLSession(configuration: config)
         session.dataTask(with: request) { (data, response, error) in
 
             if let data = data {
@@ -116,10 +121,9 @@ class APIRequest  {
                 }
             }
         }.resume()
- 
-        
     }
     
-
-    
+    public func SetUserAgent(agent: String) {
+        self.UserAgent = agent
+    }
 }
