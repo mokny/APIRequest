@@ -8,6 +8,11 @@ Add the APIRequest.swift file to your project and upload the json.php to some we
 Initialize the class (maybe globally in your view controller)
 ```swift
   var API = APIRequest(apiurl: "http://example.com/json.php")
+  
+  //Optional Settings
+  API.BlockWhenBusy = true //Default is false. This will make the API cancel all requests if another request is still pending
+  API.SetUserAgent(agent: "MyUserAgent") //Sets the Useragent
+
 ```
 
 Inside some function, make the call like this
@@ -16,7 +21,6 @@ Inside some function, make the call like this
         "name": "John Doe",
         "mail": "johndoe@example.com"
     ]
-    API.BlockWhenBusy = true //Default is false. This will make the API cancel all requests if another request is still pending.
     API.call(method: "TEST", parameters: params, ResponseHandler: MyResponseHandler)
 ```
 
