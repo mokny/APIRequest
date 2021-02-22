@@ -42,7 +42,7 @@ Add a Responsehandler to handle the API Response
    }
 ```
 
-##Protocol
+## Protocol
 By using API.call(...) the method sends your params via POST to the server. Additionaly the METHOD is sent to the server, so that key is reserved. The server then responds with a JSON encoded associative array. The custom response of the server should be located in an associative array that will be decoded on the client side (see json.php example). On the server side the key 'RESULT' should be set to 'SUCCESS' if the request was successful, or to anything else in case of an error.
 
 
