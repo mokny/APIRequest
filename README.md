@@ -2,7 +2,7 @@
 iOS Swift / Xcode APIRequest Class. This class uses the native URLSession to handle API-Requests asynchronous, non blocking. It sends parameters via POST to the server and receive a JSON Array of data mapped to a Dictionary.
 
 ## Installation
-Add the APIRequest.swift file to your project and upload the json.php to some webserver that is reachable via the internet.
+Add the APIRequest.swift file to your project and set the API URL to the webserver that provides the API-Server. This class is compatible to https://github.com/mokny/clsAPI (the Server-Part - here written in PHP)
 
 ## Example
 Initialize the class (maybe globally in your view controller)
@@ -11,7 +11,7 @@ Initialize the class (maybe globally in your view controller)
   
   //Optional Settings
   API.BlockWhenBusy = true //Default is false. This will make the API cancel all requests if another request is still pending
-  API.SetUserAgent(agent: "MyUserAgent") //Sets the Useragent
+  API.SetUserAgent(agent: "APIClient") //Sets the Useragent
 
 ```
 
@@ -29,11 +29,11 @@ Add a Responsehandler to handle the API Response
     func MyResponseHandler(success: Bool) {
         if (success) {
             //API Request was successfully submitted, do something with the response data
-            var myVar = self.API.Response.Data["test"] as! String //Data to variable
-            self.responseLabel.text = (self.API.Response.Data["test"] as! String) + String(self.API.Response.Data["time"] as! Int) //Data to UI Label
+            var myVar = self.API.Response.Data["SomeVar"] as! String //Data to variable
+            self.responseLabel.text = (self.API.Response.Data["SomeVar"] as! String) //Data to UI Label
             
             //Receive an Array from the API
-            for arraycontent in self.API.Response.Data["array"] as! Array<String> {
+            for arraycontent in self.API.Response.Data["SomeArray"] as! Array<String> {
                 self.responseLabel.text! += arraycontent
             }
         } else {
