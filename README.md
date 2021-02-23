@@ -19,7 +19,7 @@ Inside some function, make the call like this
 ```swift
     let params = [
         "name": "John Doe",
-        "mail": "johndoe@example.com"
+        "email": "johndoe@example.com"
     ]
     API.call(method: "TEST", parameters: params, ResponseHandler: MyResponseHandler)
 ```
