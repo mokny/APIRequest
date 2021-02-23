@@ -44,7 +44,6 @@ class APIRequest  {
         var Timestamp = 0
         var Data = [String: Any]()
         var ServerData = ""
-        var SessionID = ""
         var Raw = ""
     }
     
@@ -107,7 +106,6 @@ class APIRequest  {
                             self.Response.Result = dictionary["RESULT"] as! String
                             self.Response.Timestamp = dictionary["TIMESTAMP"] as! Int
                             self.Response.Data = dictionary["DATA"] as! Dictionary
-                            self.Response.SessionID = dictionary["SESSIONID"] as! String
                             self.Response.Raw = String(data: data, encoding: .utf8)!
                         }
                         //Call ResponseHandler
