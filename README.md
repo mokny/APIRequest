@@ -7,13 +7,14 @@ Add the APIRequest.swift file to your project and set the API URL to the webserv
 ## Example
 Initialize the class (maybe globally in your view controller)
 ```swift
-  var API = APIRequest(apiurl: "http://example.com/json.php")
+  var API = APIRequest(apiurl: "http://example.com/json.php", apikey: "MyTopSecretAPIKey")
   
   //Optional Settings
   API.BlockWhenBusy = true //Default is false. This will make the API cancel all requests if another request is still pending
   API.SetUserAgent(agent: "APIClient") //Sets the Useragent
 
 ```
+Note: If the API-Server does not require an API-Key, just send an empty string!
 
 Inside some function, make the call like this
 ```swift
