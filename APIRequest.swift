@@ -34,9 +34,11 @@ class APIRequest  {
     
     private var APIUrl = ""
     private var UserAgent = "APIRequest"
+    private var APIKey = ""
     
-    init(apiurl: String) {
+    init(apiurl: String, apikey: String) {
         self.APIUrl = apiurl
+        self.APIKey = apikey
     }
     
     struct ResponseStruct {
@@ -88,6 +90,7 @@ class APIRequest  {
         }
         
         postparams["METHOD"] = method //Make sure METHOD will not be overwritten
+        postparams["APIKEY"] = self.APIKey
         
         //Encode POST Parameters
         request.httpBody = postparams.percentEncoded()
